@@ -40,7 +40,8 @@ export default function Home() {
     const clientId = process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID || '581709402289-ub9q4lmhlfej220c4fa9sjoibpnmp96t.apps.googleusercontent.com'
     const redirectUri = `${window.location.origin}/api/auth/callback`
     const scope = 'https://www.googleapis.com/auth/analytics.readonly https://www.googleapis.com/auth/analytics'
-    
+    console.log("clientId", clientId)
+    console.log("redirectUri", redirectUri)
     const authUrl = `https://accounts.google.com/o/oauth2/v2/auth?` +
       `client_id=${clientId}&` +
       `redirect_uri=${encodeURIComponent(redirectUri)}&` +
