@@ -1,5 +1,7 @@
 import { useState, useEffect } from 'react'
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts'
+import CalendlyWidget from './components/CalendlyWidget';
+
 
 // Simple Modal component
 function Modal({ open, onClose, children }) {
@@ -192,7 +194,11 @@ export default function Home() {
         <div className="bg-white rounded-2xl shadow-xl p-8">
           <div className="flex justify-between items-center mb-8">
             <div className="text-center">
-              <h1 className="text-3xl font-bold text-gray-900 mb-2">Dine Analytics Resultater</h1>
+              <h1 className="text-3xl font-bold text-gray-900 mb-2">
+                Analytic Resultater for {
+                  accounts.find(acc => acc.name === selectedAccount)?.displayName || selectedAccount
+                }
+              </h1>
               <p className="text-gray-600">Basert på de siste 90 dagene</p>
             </div>
             {/* Button to open accounts modal again */}
@@ -239,7 +245,7 @@ export default function Home() {
               {/* Average Order Value */}
               <div className="bg-green-50 rounded-xl p-6">
                 <div className="flex items-center justify-between mb-4">
-                  <h3 className="text-lg font-semibold text-gray-900">Gjennomsnittlig Ordresum</h3>
+                  <h3 className="text-lg font-semibold text-gray-900">Gjennomsnittlig ordreverdi</h3>
                   <div className="w-8 h-8 bg-green-100 rounded-full flex items-center justify-center">
                     <svg className="w-4 h-4 text-green-600" fill="currentColor" viewBox="0 0 20 20">
                       <path d="M8.433 7.418c.155-.103.346-.196.567-.267v1.698a2.305 2.305 0 01-.567-.267C8.07 8.34 8 8.114 8 8c0-.114.07-.34.433-.582zM11 12.849v-1.698c.22.071.412.164.567.267.364.243.433.468.433.582 0 .114-.07.34-.433.582a2.305 2.305 0 01-.567.267z" />
@@ -247,35 +253,60 @@ export default function Home() {
                     </svg>
                   </div>
                 </div>
+                <div
+                    className={`text-xs font-semibold px-3 py-1 rounded-full ${
+                      analyticsData.averageOrderValue >= 700
+                      ? 'bg-green-200 text-green-800'
+                      : 'bg-red-200 text-red-800'
+                    }`}
+                    >
+                    {analyticsData.averageOrderValue >= 700 ? 'Good!' : 'Not Good'}
+                    </div>
                 <div className="text-3xl font-bold text-green-600 mb-2">
-                  {analyticsData.averageOrderValue} kr
+                  {analyticsData.averageOrderValue} kr 
                 </div>
                 <p className="text-sm text-gray-600">
                   Høyere AOV betyr mer inntekt per kunde
                 </p>
-                <div className="mt-4 bg-white rounded-lg p-3">
+                {/* <div className="mt-4 bg-white rounded-lg p-3">
                   <ResponsiveContainer width="100%" height={60}>
                     <BarChart data={[{ name: 'AOV', value: analyticsData.averageOrderValue }]}>
                       <Bar dataKey="value" fill="#10b981" />
                     </BarChart>
                   </ResponsiveContainer>
+                </div> */}
+                <div className="mt-4 bg-white rounded-lg p-3">
+                  <div className="flex justify-between text-xs text-gray-500 mb-1">
+                    <span>Ditt resultat</span>
+                    <span>700, -</span>
+                  </div>
+                  <div className="w-full bg-gray-200 rounded-full h-2">
+                    <div 
+                      className={`h-2 rounded-full ${
+                          analyticsData.averageOrderValue >= 700 ? 'bg-green-600' : 'bg-red-500'
+                          }`}
+                      style={{ width: `${Math.min((analyticsData.averageOrderValue / 1000) * 100, 100)}%` }}
+                    ></div>
+                  </div>
                 </div>
               </div>
             </div>
           )}
 
           {/* CTA Section */}
-          <div className="bg-gradient-to-r from-red-500 to-red-600 rounded-xl p-8 text-center text-white">
+          <div className="rounded-xl p-8 text-center text-white" style={{ backgroundColor: '#e3ccd7' }}>
             <h2 className="text-2xl font-bold mb-4">Vil du forbedre disse tallene?</h2>
             <p className="text-lg mb-6 opacity-90">
               Få en gratis gjennomgang av nettbutikken din og konkrete tips for å øke salget
             </p>
-            <button
+            {/* <button
               onClick={() => setStep(3)}
               className="bg-white text-red-600 font-bold py-3 px-8 rounded-lg text-lg hover:bg-gray-100 transition-colors duration-200"
             >
               GRATIS GJENNOMGANG AV NETTBUTIKKEN
-            </button>
+            </button> */}
+            <CalendlyWidget />
+           
           </div>
         </div>
       </div>
