@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react'
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts'
 import CalendlyWidget from './components/CalendlyWidget';
+import Link from 'next/link';
 
 
 // Simple Modal component
@@ -168,6 +169,14 @@ export default function Home() {
             
             <p className="text-sm text-gray-500 mt-4">
               Sikker tilkobling via Google OAuth 2.0
+            </p>
+            <p className='flex justify-around mt-4'>
+              <Link href="/personvern" className="underline hover:text-blue-600">
+                Personvernerklæring
+              </Link>
+              <Link href="/vilkar" className="underline hover:text-blue-600">
+                Vilkår og betingelser
+              </Link>
             </p>
           </div>
         </div>
